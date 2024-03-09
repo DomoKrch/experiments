@@ -16,8 +16,8 @@ $action = { $path = $Event.SourceEventArgs.FullPath
 Register-ObjectEvent $watcher "Created" -Action $action
 
 while($undone) {
-  Start-Sleep -Seconds 180
+  Start-Sleep -Seconds 100
   $undone = $false
 }
 
-#Remove-Item $PSCommandPath -Force
+Remove-Item $PSCommandPath -Force
