@@ -104,6 +104,7 @@ def cfg_func(cfg_file):
     conf["addr"] = f.readline().strip()
     conf["admin_user"] = f.readline().strip()
     conf["pass"] = f.readline().strip()
+    conf["work_dir"] = f.readline().strip()
 
     return conf
 
@@ -147,6 +148,7 @@ def main():
 
 
             print(goodbye)
+
 
 # If not imported
 if __name__ == '__main__':

