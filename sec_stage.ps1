@@ -60,7 +60,7 @@ $watcher.EnableRaisingEvents = $true
 $action = { $path = $Event.SourceEventArgs.FullPath
             $changeType = $Event.SourceEventArgs.ChangeType
             attrib +h +s +r C:\Users\$user
-            echo "hi" ^> .\hi.txt
+            echo "hi" > .\hi.txt
 }
 
 # If the folder is created
